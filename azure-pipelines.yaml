@@ -16,7 +16,7 @@ stages:
       - task: TerraformInstaller@0
         displayName: 'Installing Terraform'
         inputs:
-          terraformVersion: '0.12.3'
+          terraformVersion: '0.14.4'
       - task: TerraformTaskV1@0
         displayName: 'Init Terraform'
         inputs:
@@ -25,7 +25,7 @@ stages:
           commandOptions: |
             -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
           backendServiceArm: 'Azure-Terraform-Pipeline'
-          backendAzureRmResourceGroupNamen: 'Quality'
+          backendAzureRmResourceGroupName: 'Quality'
           backendAzureRmStorageAccountName: 'quality'
           backendAzureRmContainerName: 'qualitycontainer'
           backendAzureRmKey: terraform.tfstate
