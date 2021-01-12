@@ -24,12 +24,12 @@ stages:
           command:  'init'
           commandOptions: |
             -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
           backendServiceArm: 'Azure-Terraform-Pipeline'
           backendAzureRmResourceGroupName: 'Quality'
           backendAzureRmStorageAccountName: 'quality'
           backendAzureRmContainerName: 'qualitycontainer'
           backendAzureRmKey: terraform.tfstate
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
       - task: TerraformTaskV1@0
         displayName: 'Terraform Apply'
         inputs:
