@@ -12,7 +12,7 @@ stages:
         displayName: 'Installing SSH-Keys'
         inputs:
           knownHostsEntry: 'default'
-          sshKeySecureFile: 'id_rsa'
+          sshKeySecureFile: 'id_rsa.pub'
       - task: TerraformInstaller@0
         displayName: 'Installing Terraform'
         inputs:
