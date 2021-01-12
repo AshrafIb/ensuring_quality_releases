@@ -13,7 +13,7 @@ stages:
         inputs:
           knownHostsEntry: 'default'
           sshKeySecureFile: 'id_rsa'
-      - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV1@0
+      - task: TerraformInstaller@0
         displayName: 'Installing Terraform'
         inputs:
           terraformVersion: '0.12.3'
