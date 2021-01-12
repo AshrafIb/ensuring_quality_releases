@@ -38,7 +38,7 @@ stages:
           commandOptions: |
             -var "subscription_id=$(AZURE_SUBSCRIPTION_ID)" -var "client_id=$(CLIENT_ID)" -var "client_secret=$(CLIENT_SECRET)" -var "tenant_id=$(TENANT_ID)" -var "public_key=$(PUBLIC_KEY)"
           environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
 
 #- stage: Build
 #  jobs:
