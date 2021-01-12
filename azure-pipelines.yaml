@@ -25,7 +25,7 @@ stages:
 #          commandOptions: |
 #            -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-          backendServiceArm: '$(azuresubscription)'
+          backendServiceArm: 'Azure-Terraform-Pipeline'
           backendAzureRmResourceGroupName: 'Quality'
           backendAzureRmStorageAccountName: 'quality'
           backendAzureRmContainerName: 'qualitycontainer'
@@ -35,8 +35,8 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'apply'
-          commandOptions: |
-            -var "subscription_id=$(AZURE_SUBSCRIPTION_ID)" -var "client_id=$(CLIENT_ID)" -var "client_secret=$(CLIENT_SECRET)" -var "tenant_id=$(TENANT_ID)" -var "public_key=$(PUBLIC_KEY)"
+#          commandOptions: |
+#            -var "subscription_id=$(AZURE_SUBSCRIPTION_ID)" -var "client_id=$(CLIENT_ID)" -var "client_secret=$(CLIENT_SECRET)" -var "tenant_id=$(TENANT_ID)" -var "public_key=$(PUBLIC_KEY)"
           environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
 
