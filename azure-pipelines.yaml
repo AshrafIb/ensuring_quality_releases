@@ -24,7 +24,7 @@ stages:
 #          command:  'init'
 #          commandOptions: |
 #            -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
           backendServiceArm: 'Azure-Terraform-Pipeline'
           backendAzureRmResourceGroupName: 'Quality'
           backendAzureRmStorageAccountName: 'quality'
