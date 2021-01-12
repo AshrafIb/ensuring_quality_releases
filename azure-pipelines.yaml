@@ -1,46 +1,88 @@
+trigger:
+  -master
+
 name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
-- stage: Build
+  -stage: Terraform 
+  displayName: 'Install Terraform'
   jobs:
-  - job: Build
-    pool:
-      name: Hosted Ubuntu 1604
+    - jobs: terraform
+    displayName: 'Initializing Terraform'
     steps:
+      - task: InstallSSHKey@0
+      displayName: 'Installing SSH-Keys'
+      inputs:
+        knownHostsEntry: 'default'
+        sshKeySecureFile: 'id_rsa'
+      - task: TerraformInstaller@0
+      displayName: 'Installing Terraform'
+      inputs:
+        terraformVersion: '0.12.3'
+      -task: TerraformTaskV1@0
+      displayName: 'Init Terraform'
+      inputs:
+        provider: 'azurerm'
+        command:  'init'
+        commandOptions: |
+          -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
+        backendServiceArm: 'Azure-Terraform-Pipeline'
+        backendAzureRmResourceGroupNamen: 'Quality'
+        backendAzureRmStorageAccountName: 'quality'
+        backendAzureRmContainerName: 'qualitycontainer'
+        backendAzureRmKey: terraform.tfstate
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+      -task: TerraformTaskV1@0
+      displayName: 'Terraform Apply'
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        commandOptions: |
+          -var "subscription_id=$(AZURE_SUBSCRIPTION_ID)" -var "client_id=$(CLIENT_ID)" -var "client_secret=$(CLIENT_SECRET)" -var "tenant_id=$(TENANT_ID)" -var "public_key=$(PUBLIC_KEY)"
+        environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+
+#- stage: Build
+#  jobs:
+#  - job: Build
+ #   pool:
+  #    name: Hosted Ubuntu 1604
+   # steps:
     # Needed for Terraform VM deployment
     # - task: InstallSSHKey@0
     #   inputs:
     #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
     #     sshPublicKey: 'PUBLIC_KEY'
     #     sshKeySecureFile: 'id_rsa'
-    - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
-      inputs:
-        rootFolderOrFile: 'path/to/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
-      artifact: drop-fakerestapi
-- stage:
-  jobs:
-  - deployment: FakeRestAPI
-    pool:
-      vmImage: 'Ubuntu-16.04'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: ''
-              appName: ''
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+
+    #- task: ArchiveFiles@2
+    #  displayName: 'Archive FakeRestAPI'
+    #  inputs:
+    #    rootFolderOrFile: 'path/to/fakerestapi'
+    #    includeRootFolder: false
+    #    archiveType: 'zip'
+    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+    #  displayName: 'Upload Package'
+    #  artifact: drop-fakerestapi
+#- stage:
+#  jobs:
+ # - deployment: FakeRestAPI
+ #   pool:
+ #     vmImage: 'Ubuntu-16.04'
+  #  environment: 'TEST'
+  #  strategy:
+   #   runOnce:
+   #     deploy:
+    #      steps:
+     #     - task: AzureWebApp@1
+      #      displayName: 'Deploy Azure Web App'
+       #     inputs:
+        #      azureSubscription: ''
+         #     appName: ''
+          #    appType: webApp
+           #   package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   # - deployment: VMDeploy
   #   displayName: NAME
   #   environment:
