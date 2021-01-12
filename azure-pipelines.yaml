@@ -20,10 +20,10 @@ stages:
       - task: TerraformTaskV1@0
         displayName: 'Init Terraform'
         inputs:
-          provider: 'azurerm'
-          command:  'init'
-          commandOptions: |
-            -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
+#          provider: 'azurerm'
+#          command:  'init'
+#          commandOptions: |
+#            -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
           backendServiceArm: 'Azure-Terraform-Pipeline'
           backendAzureRmResourceGroupName: 'Quality'
