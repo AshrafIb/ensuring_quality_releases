@@ -13,6 +13,7 @@ stages:
         inputs:
           knownHostsEntry: 'E3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
           sshKeySecureFile: 'myKey'
+          sshPublicKey: $(PUBLIC_KEY)
       - task: TerraformInstaller@0
         displayName: 'Installing Terraform'
         inputs:
@@ -36,7 +37,7 @@ stages:
           provider: 'azurerm'
           command: 'apply'
 #          commandOptions: |
-#            -var "subscription_id=$(AZURE_SUBSCRIPTION_ID)" -var "client_id=$(CLIENT_ID)" -var "client_secret=$(CLIENT_SECRET)" -var "tenant_id=$(TENANT_ID)" -var "public_key=$(PUBLIC_KEY)"
+#            -var "public_key=$(#z)"
           environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
 
