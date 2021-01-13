@@ -8,6 +8,8 @@ stages:
   - job: terraform
     displayName: 'Initializing Terraform'
     steps:
+      - bash: |
+          echo $(Pipeline.Workspace)
       - task: InstallSSHKey@0
         displayName: 'Installing SSH-Keys'
         inputs:
@@ -36,8 +38,8 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'apply'
-#          commandOptions: |
-#            -var "public_key=$(#z)"
+          commandOptions: |
+            -auto-approve             
           environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
 
