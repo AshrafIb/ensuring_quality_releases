@@ -78,10 +78,11 @@ stages:
       displayName: 'Deploy WebApp'
       inputs:
           azureSubscription: 'Azure-Terraform-Pipeline'
-          WebAppName: 'qualityproject-AppService'
+          appName: 'qualityproject-AppService'
+          appType: webApp
           Package: '$(Pipeline.Workspace)/publ_fakerestapi/fakerestapi-$(Build.BuildId).zip'
-          DeploymentType: zipDeploy
-          TakeAppOfflineFlag: false
+          deploymentMethod: zipDeploy
+
 
 
 
