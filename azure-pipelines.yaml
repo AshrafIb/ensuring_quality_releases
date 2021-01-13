@@ -62,6 +62,27 @@ stages:
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
         verbose: true
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish FakeRestAPI'
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
+        artifactName: publ_fakerestapi
+- stage: Deployment
+  jobs:
+  - job: DeployingApp
+    displayName: 'Deployment of FakeRestAPI'
+    steps:
+    - download: current
+      artifact: publ_fakerestapi
+    - task: AzureRMWebAppDeployment@4
+      displayName: 'Deploy WebApp'
+      inputs:
+          azureSubscription: 'Azure-Terraform-Pipeline'
+          WebAppName: 'TestWebAPP'
+          Package: '$(Pipeline.Workspace)/publ_fakerestapi/publ_fakerestapi-$(Build.BuildId).zip'
+          DeploymentType: zipDeploy
+          TakeAppOfflineFlag: false
+
 
 
 
