@@ -22,8 +22,8 @@ stages:
         inputs:
           provider: 'azurerm'
           command:  'init'
-          commandOptions: |
-            -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
+ #         commandOptions: |
+ #           -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
           backendServiceArm: 'Azure-Terraform-Pipeline'
           backendAzureRmResourceGroupName: 'Quality'
