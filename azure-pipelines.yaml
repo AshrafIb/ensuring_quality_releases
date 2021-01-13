@@ -72,7 +72,7 @@ stages:
   - deployment: DeployingApp
     displayName: 'Deployment of FakeRestAPI'
     pool:
-      vmImage: 'ubuntu-18.4'
+      vmImage: 'ubuntu-18.04'
     environment: 'TEST'
     strategy:
       runOnce:
@@ -88,7 +88,6 @@ stages:
               appType: webApp
               Package: '$(Pipeline.Workspace)/publ_fakerestapi/fakerestapi-$(Build.BuildId).zip'
               deploymentMethod: zipDeploy
-
 
 #- stage: Build
 #  jobs:
