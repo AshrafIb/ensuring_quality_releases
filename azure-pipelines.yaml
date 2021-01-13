@@ -77,7 +77,7 @@ stages:
     - task: AzureRMWebAppDeployment@4
       displayName: 'Deploy WebApp'
       inputs:
-          azureSubscription: 'Azure-Terraform-Pipeline'
+          azureSubscription: '$(azuresubscription)'
           WebAppName: 'qualityproject-AppService'
           Package: '$(Pipeline.Workspace)/publ_fakerestapi/fakerestapi-$(Build.BuildId).zip'
           DeploymentType: zipDeploy
