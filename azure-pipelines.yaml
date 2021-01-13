@@ -71,22 +71,22 @@ stages:
   jobs:
   - job: DeployingApp
     displayName: 'Deployment of FakeRestAPI'
-    steps:
-    - download: current
-      artifact: publ_fakerestapi
-    - task: AzureWebApp@1
-      displayName: 'Deploy WebApp'
-      inputs:
-          azureSubscription: 'Azure-Terraform-Pipeline'
-          appName: 'qualityproject-AppService'
-          appType: webApp
-          Package: '$(Pipeline.Workspace)/publ_fakerestapi/fakerestapi-$(Build.BuildId).zip'
-          deploymentMethod: zipDeploy
-
-
-
-
-
+    pool:
+      vmImage: 'ubuntu-18.4'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: publ_fakerestapi
+          - task: AzureWebApp@1
+            displayName: 'Deploy WebApp'
+            inputs:
+              azureSubscription: 'Azure-Terraform-Pipeline'
+              appName: 'qualityproject-AppService'
+              appType: webApp
+              Package: '$(Pipeline.Workspace)/publ_fakerestapi/fakerestapi-$(Build.BuildId).zip'
+              deploymentMethod: zipDeploy
 
 
 #- stage: Build
