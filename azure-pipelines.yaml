@@ -4,6 +4,7 @@ variables:
 stages:
 - stage: Terraform 
   displayName: 'Install Terraform'
+  # Initialize Azure Infrastructure 
   jobs:
   - job: terraform
     displayName: 'Initializing Terraform'
@@ -29,8 +30,6 @@ stages:
         inputs:
           provider: 'azurerm'
           command:  'init'
- #         commandOptions: |
- #           -backend-config "access_key=$(STORAGE_ACCESS_KEY)"
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
           backendServiceArm: 'Azure-Terraform-Pipeline'
           backendAzureRmResourceGroupName: 'Quality'
@@ -46,6 +45,27 @@ stages:
             -auto-approve             
           environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+
+# Deploying FakeRestAPI into VM           
+- stage: Build
+  jobs:
+  - job: build_artifacts
+    displayName: 'Build all Artifacts'
+    pool:
+      vmImage: 'ubuntu-18.04'
+    steps:
+    - task: ArchiveFiles@2
+      displayName: 'Archive for FakeRestAPI'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        includeRootFolder: false 
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
+        verbose: true
+
+
+
+
 
 #- stage: Build
 #  jobs:
