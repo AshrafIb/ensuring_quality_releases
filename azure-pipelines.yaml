@@ -10,6 +10,8 @@ stages:
     steps:
       - bash: |
           echo $(Pipeline.Workspace)
+          cd $(Pipeline.Workspace)
+          ls -la 
       - task: InstallSSHKey@0
         displayName: 'Installing SSH-Keys'
         inputs:
