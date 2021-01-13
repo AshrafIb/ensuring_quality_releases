@@ -12,7 +12,7 @@ stages:
           echo $(Pipeline.Workspace)
           cd $(Agent.TempDirectory)
           ls -la 
-          cat MyKey.pub
+          cat myKey.pub
       - task: InstallSSHKey@0
         displayName: 'Installing SSH-Keys'
         inputs:
