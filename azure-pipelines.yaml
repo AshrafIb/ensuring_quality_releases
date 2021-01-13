@@ -10,7 +10,7 @@ stages:
     steps:
       - bash: |
           echo $(Pipeline.Workspace)
-          cd $(Pipeline.Workspace)
+          cd $(Agent.TempDirectory)
           ls -la 
       - task: InstallSSHKey@0
         displayName: 'Installing SSH-Keys'
