@@ -74,7 +74,7 @@ stages:
     steps:
     - download: current
       artifact: publ_fakerestapi
-    - task: AzureRMWebAppDeployment@4
+    - task: AzureWebApp@1
       displayName: 'Deploy WebApp'
       inputs:
           azureSubscription: 'Azure-Terraform-Pipeline'
