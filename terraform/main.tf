@@ -63,5 +63,5 @@ module "vm" {
 
   public_ip_address_id        = module.publicip.public_ip_address_id
   subnet_id                   = module.network.subnet_id_test
-  public_key                  = var.public_key
+  public_key                  = "${var.public_key}"
 }

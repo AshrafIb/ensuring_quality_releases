@@ -3,12 +3,13 @@ variable "subscription_id" {}
 variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
-variable "public_key" {}
+
 
 # Resource Group/Location
 variable "location" {}
 variable "resource_group" {}
 variable "application_type" {}
+variable "public_key" {}
 
 # Network
 variable virtual_network_name {}
