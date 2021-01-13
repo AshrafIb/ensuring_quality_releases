@@ -69,7 +69,7 @@ stages:
         artifactName: publ_fakerestapi
 - stage: Deployment
   jobs:
-  - job: DeployingApp
+  - deployment: DeployingApp
     displayName: 'Deployment of FakeRestAPI'
     pool:
       vmImage: 'ubuntu-18.4'
