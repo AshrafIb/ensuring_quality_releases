@@ -74,7 +74,7 @@ stages:
     displayName: Deployment of FakeRestAPI
     pool:
       vmImage: 'ubuntu-18.04'
-    environment: 'TEST'
+      environment: 'TEST'
     steps:
     - download: current 
       artifact: publ_fakerestapi
