@@ -90,8 +90,26 @@ stages:
         DeploymentType: 'zipDeploy'
         TakeAppOfflineFlag: false
 
+- stage: Test
+  jobs: 
+  - job: Load_Test
+    displayName: 'JMeter Load-Test'
+    steps:
+    - task: JMeterInstaller@0
+      inputs:
+        jmeterVersion: '5.2.1'
+    - task: Bash@3
+      displayName: 'Run Jmeter test'
+      inputs:
+        targetType: 'inline'
+        script: |
+          jmeter -n -t automatedtesting/jmeter/Starter.jmx -l tests_results.csv -f -e -o test-report
+          
 
 
+
+
+  - 
 #- stage: Build
 #  jobs:
 #  - job: Build
