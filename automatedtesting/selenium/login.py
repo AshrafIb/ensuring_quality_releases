@@ -14,5 +14,7 @@ def login (user, password):
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
 
+    
+
 login('standard_user', 'secret_sauce')
 

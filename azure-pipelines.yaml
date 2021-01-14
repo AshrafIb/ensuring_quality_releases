@@ -89,11 +89,6 @@ stages:
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
         TakeAppOfflineFlag: false
-  - deployment: vm
-    displayName: 'Deployment of VM'
-    environment: 
-      name: 'TEST'
-      resourceType: VirtualMachine
 
 
 
