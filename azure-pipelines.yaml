@@ -87,6 +87,14 @@ stages:
         Package: '$(Pipeline.Workspace)/publ_fakerestapi/fakerestapi-$(Build.BuildId).zip'
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
+        TakeAppOfflineFlag: false
+  - deployment: vm
+    displayName: 'Deployment of VM'
+    environment: 
+      name: 'TEST'
+      resourceType: VirtualMachine
+      
+
 
 #- stage: Build
 #  jobs:
