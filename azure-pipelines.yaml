@@ -62,11 +62,12 @@ stages:
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
         verbose: true
-    - task: PublishPipelineArtifact@1
+    - publish: $(Build.ArtifactStagingDirectory)
       displayName: 'Publish FakeRestAPI'
-      inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
-        artifactName: publ_fakerestapi
+      artifact: publ_fakerestapi
+      #inputs:
+       # targetPath: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
+        #artifactName: publ_fakerestapi
 
 - stage: Deploy
   jobs: 
