@@ -31,7 +31,7 @@ stages:
           provider: 'azurerm'
           command:  'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-          backendServiceArm: 'Terraform'
+          backendServiceArm: 'Azure-Terraform-Pipeline'
           backendAzureRmResourceGroupName: 'Quality'
           backendAzureRmStorageAccountName: 'quality'
           backendAzureRmContainerName: 'qualitycontainer'
@@ -43,7 +43,7 @@ stages:
           command: 'apply'
           commandOptions: |
             -auto-approve             
-          environmentServiceNameAzureRM: 'Terraform'
+          environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
 
 # Deploying FakeRestAPI into VM           
@@ -81,7 +81,7 @@ stages:
       displayName: WebappTask
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'Terraform'
+        azureSubscription: 'Azure-Terraform-Pipeline'
         WebAppName: 'qualityproject-AppService'
         appType: 'webApp'
         Package: '$(Pipeline.Workspace)/publ_fakerestapi/fakerestapi-$(Build.BuildId).zip'
