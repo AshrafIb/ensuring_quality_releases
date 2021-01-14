@@ -66,7 +66,7 @@ stages:
       displayName: 'Publish FakeRestAPI'
       inputs:
         targetPath: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
-        artifactName: publ_fakerestapi
+        artifactName: 'publ_fakerestapi'
 
 - stage: Deploy
   jobs: 
@@ -75,8 +75,8 @@ stages:
     pool:
       vmImage: 'ubuntu-18.04'
     steps:
-    - download: current 
-      artifact: publ_fakerestapi
+    #- download: current 
+    #  artifact: publ_fakerestapi
     - task: AzureWebApp@1
       displayName: WebappTask
       inputs:
