@@ -76,7 +76,7 @@ stages:
       vmImage: 'ubuntu-18.04'
     steps:
     - download: current 
-      artifact: publ_fakerestapi
+      artifact: 'publ_fakerestapi'
     - task: AzureWebApp@1
       displayName: WebappTask
       inputs:
