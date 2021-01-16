@@ -115,16 +115,22 @@ stages:
         script: 'sudo npm install -g newman'
         workingDirectory: $(System.DefaultWorkingDirectory)
     - task: CmdLine@2
+      displayName: 'Postman Validation Test'
+      inputs:
+        script: |
+          newman run validation_test.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
+        workingDirectory: $(System.DefaultWorkingDirectory)
+    - task: CmdLine@2
       displayName: 'Postman Regression Test'
       inputs:
         script: |
-          newman run regression_test.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/regression_report.xml
+          newman run regression_test.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     - task: PublishTestResults@2
       displayName: 'Publish Postman Results'
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: $(Build.SourcesDirectory)/automatedtesting/postman/regression_report.xml
+        testResultsFiles: $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
 
 
 
