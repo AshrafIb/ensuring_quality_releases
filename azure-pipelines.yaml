@@ -123,7 +123,7 @@ stages:
     - task: PublishTestResults@2
       displayName: 'Publish Postman Results'
       inputs:
-        testResultsFiles: $(System.DefaultWorkingDirectory)/automatedtesting/postman/Results\*.xml
+        testResultsFiles: $(System.DefaultWorkingDirectory)/automatedtesting/postman/Results/*.xml
         testResultsFormat: 'JUnit'
 
 
