@@ -112,7 +112,7 @@ stages:
     - task: CmdLine@2
       displayName: 'Newmann runner installation'
       inputs:
-        script: 'sudo npm install -g rewman'
+        script: 'sudo npm install -g newman'
         workingDirectory: $(System.DefaultWorkingDirectory)
     - task: CmdLine@2
       displayName: 'Postman Regression Test'
