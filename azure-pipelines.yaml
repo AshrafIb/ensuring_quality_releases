@@ -120,6 +120,10 @@ stages:
         scripts: |
           newman run regression_test.json --reporters cli, junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/regression_test.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+    - task: PublishTestResults@2
+      displayName: 'Publish Postman Results'
+      inputs:
+        testResultsFiles: '**/regression_test.xml'
 
 
 
