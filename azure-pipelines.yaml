@@ -118,13 +118,13 @@ stages:
       displayName: 'Postman Validation Test'
       inputs:
         script: |
-          newman run validation_test.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
+          newman run validation_test.json --delay-request 100 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     - task: CmdLine@2
       displayName: 'Postman Regression Test'
       inputs:
         script: |
-          newman run regression_test.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
+          newman run regression_test.json --delay-request 100 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     - task: PublishTestResults@2
       displayName: 'Publish Postman Results'
