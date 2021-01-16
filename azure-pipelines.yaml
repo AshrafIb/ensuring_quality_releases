@@ -116,12 +116,14 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)
     - task: CmdLine@2
       displayName: 'Postman Validation Test'
+      continueOnError: true
       inputs:
         script: |
           newman run validation_test.json --delay-request 10000 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     - task: CmdLine@2
       displayName: 'Postman Regression Test'
+      continueOnError: true
       inputs:
         script: |
           newman run regression_test.json --delay-request 10000 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
