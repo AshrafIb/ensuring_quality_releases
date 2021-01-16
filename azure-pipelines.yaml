@@ -119,7 +119,7 @@ stages:
       inputs:
         script: |
           newman run validation_test.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
-        workingDirectory: $(System.DefaultWorkingDirectory)
+        workingDirectory: '$(System.DefaultWorkingDirectory)/postman'
     - task: CmdLine@2
       displayName: 'Postman Regression Test'
       inputs:
