@@ -117,13 +117,13 @@ stages:
     - task: CmdLine@2
       displayName: 'Postman Regression Test'
       inputs:
-        scripts: |
-          newman run regression_test.json --reporters cli, junit --reporter-junit-export Results\regression_report.xml
+        script: |
+          newman run regression_test.json --reporters cli, junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/regression_report.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     - task: PublishTestResults@2
       displayName: 'Publish Postman Results'
       inputs:
-        testResultsFiles: $(System.DefaultWorkingDirectory)/automatedtesting/postman/Results\*.xml
+        testResultsFiles: $(Build.SourcesDirectory)/automatedtesting/postman/*.xml
         testResultsFormat: 'JUnit'
 
 
