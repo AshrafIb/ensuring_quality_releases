@@ -105,6 +105,27 @@ stages:
         targetType: 'inline'
         script: |
           jmeter -n -t automatedtesting/jmeter/Starter.jmx -l tests_results.csv -f -e -o test-report
+  
+  - job: Postman_api
+    displayName: 'Postman Integration'
+    steps: 
+    - task: CmdLine@2
+      displayName: 'Newmann runner installation'
+      inputs:
+        script: 'sudo npm install -g rewman'
+        workingDirectory: $(System.DefaultWorkingDirectory)
+    - task: CmdLine@2
+      displayName: 'Postman Regression Test'
+      inputs:
+        scripts: |
+          newman run regression_test.json --reporters cli, junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/regression_test.xml
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+
+
+
+
+
+
 
 
 #- stage: Build
