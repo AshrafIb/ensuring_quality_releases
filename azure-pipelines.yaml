@@ -129,7 +129,7 @@ stages:
                   pip3 install selenium
                   export PATH=$PATH:/usr/lib/chromium-browser/
                   cd $(Pipeline.Workspace)/selenium
-                  unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d 
+                  unzip -o $(Pipeline.Workspace)/Selenium/$(Build.BuildId)-selenium-tests -d 
             - task: CmdLine@2
               displayName: 'Running Selenium Test'
               inputs:
