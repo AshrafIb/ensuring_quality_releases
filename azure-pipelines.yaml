@@ -105,6 +105,40 @@ stages:
         targetType: 'inline'
         script: |
           jmeter -n -t automatedtesting/jmeter/Starter.jmx -l tests_results.csv -f -e -o test-report
+
+  - deployment: SeleniumTest_VM
+    displayName: 'Testing UI' 
+    environment:
+      name: 'Test'
+      resourceType: VirtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - download: Selenium'
+              artifact: Selenium 
+            - task: CmdLine@2
+              displayName: 'Installing Selenium'
+              inputs: 
+                script: |
+                  sudo apt-get upgrade -y
+                  sudo apt-get install python3-pip -y
+                  sudo apt-get install unzip -y
+                  sudo apt-get install -y chromium-browser
+                  sudo apt-get install -y chromium-chromedriver
+                  pip3 install selenium
+                  export PATH=$PATH:/usr/lib/chromium-browser/
+                  cd $(Pipeline.Workspace)/selenium
+                  unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d 
+            - task: CmdLine@2
+              displayName: 'Running Selenium Test'
+              inputs:
+                script: |
+                  sudo mkdir /var/logs
+                  cd $(Pipeline.Workspace)/Selenium
+                  python3 login.py >> /var/logs/selenium-test.log
+
+
   
   - job: Postman_api
     displayName: 'Postman Integration'
