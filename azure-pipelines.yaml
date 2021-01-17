@@ -115,7 +115,7 @@ stages:
       runOnce:
         deploy:
           steps:
-            - download: Selenium'
+            - download: current
               artifact: Selenium 
             - task: CmdLine@2
               displayName: 'Installing Selenium'
