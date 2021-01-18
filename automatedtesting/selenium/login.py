@@ -7,10 +7,10 @@ import logging
 def login (user, password):
     print ('Starting the browser...')
     # --uncomment when running in Azure DevOps.
-    # options = ChromeOptions()
-    # options.add_argument("--headless") 
-    # driver = webdriver.Chrome(options=options)
-    driver = webdriver.Chrome('D:\Chromedriver\chromedriver.exe')
+    options = ChromeOptions()
+    options.add_argument("--headless") 
+    driver = webdriver.Chrome(options=options)
+    #driver = webdriver.Chrome('D:\Chromedriver\chromedriver.exe')
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
 
