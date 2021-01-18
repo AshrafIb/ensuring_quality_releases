@@ -135,6 +135,7 @@ stages:
               displayName: 'Installing Selenium'
               inputs: 
                 script: |
+                  #!/bin/bash
                   sudo apt-get upgrade -y
                   sudo apt-get install python3-pip -y
                   sudo apt-get install unzip -y
@@ -148,10 +149,11 @@ stages:
               displayName: 'Running Selenium Test'
               inputs:
                 script: |
-                  sudo mkdir /logs
+                  sudo mkdir -p /logs
+                  sudo chmod 777 /logs
                   cd $(Pipeline.Workspace)/selenium
                   echo >> /logs/selenium_logfile.log
-                  python3 login.py >> sudo tee -a /logs/selenium_logfile.log
+                  python3 login.py 2>&1 | sudo tee -a /logs/selenium_logfile.log
 
 
   
