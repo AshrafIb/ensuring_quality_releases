@@ -186,18 +186,18 @@ stages:
       continueOnError: true
       inputs:
         script: |
-          newman run validation_test.json --delay-request 10000 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
+          newman run validation_test.json --delay-request 10000 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/postman_validation_report.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     - task: CmdLine@2
       displayName: 'Postman Regression Test'
       continueOnError: true
       inputs:
         script: |
-          newman run regression_test.json --delay-request 10000 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
+          newman run regression_test.json --delay-request 10000 --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/postman_regression_report.xml
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     - task: PublishTestResults@2
       displayName: 'Publish Postman Results'
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
+        testResultsFiles: '$(Build.SourcesDirectory)/automatedtesting/postman/*.xml'
 
