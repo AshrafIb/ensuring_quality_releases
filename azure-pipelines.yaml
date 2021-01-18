@@ -107,25 +107,36 @@ stages:
 
 - stage: Test
   jobs: 
-  - job: JMeter_Test
-    displayName: 'JMeter Load-Test'
+  - job: JMeter_test
+    displayName: 'JMeter Tests'
     steps:
     - task: JMeterInstaller@0
       inputs:
         jmeterVersion: '5.2.1'
     - task: CmdLine@2
-      displayName: 'Run Jmeter test'
+      displayName: 'Run JMeter Endurance'
       inputs:
         targetType: 'inline'
         script: |
           mkdir -p endurance_test
-          jmeter -n -t endurance_plan.jmx -l endurance_results.csv -f -e -o endurance_results
+          jmeter -n -t endurance_plan.jmx -l endurance_results.csv -f -e -o endurance_test
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_test'
         ArtifactName: 'endurance-results'
-
+    - task: CmdLine@2
+      displayName: 'JMeter Stress Test'
+      inputs:
+        targetType: 'inline'
+        script: |
+          mkdir -p stress_test
+          jmeter -n -t stress_plan.jmx -l stress_results.csv -f -e -o stress_test
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/stress_test'
+        ArtifactName: 'stress-results'
 
   - deployment: SeleniumTest_VM
     displayName: 'Testing UI' 
@@ -161,8 +172,6 @@ stages:
                   cd $(Pipeline.Workspace)/selenium
                   echo >> /logs/selenium_logfile.log
                   python3 login.py 2>&1 | sudo tee -a /logs/selenium_logfile.log
-
-
   
   - job: Postman_api
     displayName: 'Postman Integration'
