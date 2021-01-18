@@ -119,7 +119,7 @@ stages:
         targetType: 'inline'
         script: |
           mkdir -p endurance_test
-          jmeter -n -t automatedtesting/jmeter/endurance_plan.jmx -l endurance_results.csv -f -e -o endurance_results
+          jmeter -n -t endurance_plan.jmx -l endurance_results.csv -f -e -o endurance_results
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
     - task: PublishBuildArtifacts@1
       inputs:
