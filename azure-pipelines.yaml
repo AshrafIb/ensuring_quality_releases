@@ -150,7 +150,8 @@ stages:
                 script: |
                   sudo mkdir /var/logs
                   cd $(Pipeline.Workspace)/Selenium
-                  python3 login.py >> /var/logs/selenium_log.log
+                  echo >> /var/logs/selenium_logfile.log
+                  python3 login.py >> /var/logs/selenium_logfile.log
 
 
   
