@@ -65,8 +65,8 @@ def login (user, password):
     cart_elements = driver.find_elements_by_css_selector('.cart_item')
     for c in cart_elements:
         cart_product = c.find_element_by_css_selector('.inventory_item_name').text
-        print(cart_product)
         c.find_element_by_css_selector('button.btn_secondary.cart_button').click()
+        print('Product {} removed from cart'.format(cart_product))
         logging.info('Product {} removed from cart'.format(cart_product))
     
     # Check Cart
@@ -79,6 +79,7 @@ def login (user, password):
         print('Cart is empty')
         logging.info('Cart is empty again')
 
+    print('Cart is empty again')
     logging.info('Test was successfull')
 
 login('standard_user', 'secret_sauce')
