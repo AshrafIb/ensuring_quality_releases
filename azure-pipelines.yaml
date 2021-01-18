@@ -49,8 +49,8 @@ stages:
 # Deploying FakeRestAPI into VM           
 - stage: Build
   jobs:
-  - job: build_artifacts
-    displayName: 'Build all Artifacts'
+  - job: fakerestapi_artifact
+    displayName: 'Build FakeRestAPI Artifact'
     pool:
       vmImage: 'ubuntu-18.04'
     steps:
@@ -65,7 +65,12 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)
       displayName: 'Publish FakeRestAPI'
       artifact: publ_fakerestapi
-    
+
+  - job: selenium_artifact
+    displayName: 'Build Selenium Artifact'
+    pool: 
+      vmImage: 'ubuntu-18.04'
+    steps:
     - task: ArchiveFiles@2
       displayName: 'Archive for Selenium'
       inputs:
@@ -138,7 +143,7 @@ stages:
                   pip3 install selenium
                   export PATH=$PATH:/usr/lib/chromium-browser/
                   cd $(Pipeline.Workspace)/selenium
-                  unzip -o $(Pipeline.Workspace)/selenium/selenium-$(Build.BuildId) -d 
+                  unzip -o $(Pipeline.Workspace)/selenium/selenium-$(Build.BuildId) -d .
             - task: CmdLine@2
               displayName: 'Running Selenium Test'
               inputs:
