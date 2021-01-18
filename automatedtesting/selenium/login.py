@@ -79,4 +79,6 @@ def login (user, password):
         print('Cart is empty')
         logging.info('Cart is empty again')
 
+    logging.info('Test was successfull')
+
 login('standard_user', 'secret_sauce')

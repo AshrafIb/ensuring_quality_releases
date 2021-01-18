@@ -65,9 +65,18 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)
       displayName: 'Publish FakeRestAPI'
       artifact: publ_fakerestapi
-      #inputs:
-       # targetPath: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
-        #artifactName: publ_fakerestapi
+    
+    - task: ArchiveFiles@2
+      displayName: 'Archive for Selenium'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/selenium-$(Build.BuildId).zip'
+        verbose: true
+    - publish: $(Build.ArtifactStagingDirectory)
+      displayName: 'Publish Selenium'
+      artifact: selenium
 
 - stage: Deploy
   jobs: 
@@ -91,20 +100,20 @@ stages:
         DeploymentType: 'zipDeploy'
         TakeAppOfflineFlag: false
 
-- stage: Test
-  jobs: 
-  - job: Load_Test
-    displayName: 'JMeter Load-Test'
-    steps:
-    - task: JMeterInstaller@0
-      inputs:
-        jmeterVersion: '5.2.1'
-    - task: Bash@3
-      displayName: 'Run Jmeter test'
-      inputs:
-        targetType: 'inline'
-        script: |
-          jmeter -n -t automatedtesting/jmeter/Starter.jmx -l tests_results.csv -f -e -o test-report
+#- stage: Test
+#  jobs: 
+#  - job: Load_Test
+#    displayName: 'JMeter Load-Test'
+#    steps:
+#    - task: JMeterInstaller@0
+#      inputs:
+#        jmeterVersion: '5.2.1'
+#    - task: Bash@3
+#      displayName: 'Run Jmeter test'
+#      inputs:
+#        targetType: 'inline'
+#        script: |
+#          jmeter -n -t automatedtesting/jmeter/Starter.jmx -l tests_results.csv -f -e -o test-report
 
   - deployment: SeleniumTest_VM
     displayName: 'Testing UI' 
@@ -116,7 +125,7 @@ stages:
         deploy:
           steps:
             - download: current
-              artifact: Selenium 
+              artifact: selenium 
             - task: CmdLine@2
               displayName: 'Installing Selenium'
               inputs: 
@@ -129,14 +138,14 @@ stages:
                   pip3 install selenium
                   export PATH=$PATH:/usr/lib/chromium-browser/
                   cd $(Pipeline.Workspace)/selenium
-                  unzip -o $(Pipeline.Workspace)/Selenium/$(Build.BuildId)-selenium-tests -d 
+                  unzip -o $(Pipeline.Workspace)/selenium/selenium-$(Build.BuildId) -d 
             - task: CmdLine@2
               displayName: 'Running Selenium Test'
               inputs:
                 script: |
                   sudo mkdir /var/logs
                   cd $(Pipeline.Workspace)/Selenium
-                  python3 login.py >> /var/logs/selenium-test.log
+                  python3 login.py >> /var/logs/selenium_log.log
 
 
   
