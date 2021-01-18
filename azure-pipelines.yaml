@@ -151,7 +151,7 @@ stages:
                   sudo mkdir /logs
                   cd $(Pipeline.Workspace)/selenium
                   echo >> /logs/selenium_logfile.log
-                  python3 login.py >> /logs/selenium_logfile.log
+                  python3 login.py >> sudo tee -a /logs/selenium_logfile.log
 
 
   
