@@ -1,3 +1,4 @@
+# Installing Terraform and Creating Infrastructure
 name: Azure Pipelines
 variables:
   python.version: '3.7.6'
@@ -46,7 +47,7 @@ stages:
           environmentServiceNameAzureRM: 'Azure-Terraform-Pipeline'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
 
-# Deploying FakeRestAPI into VM           
+# Creating FakeRestAPI-Artifact          
 - stage: Build
   jobs:
   - job: fakerestapi_artifact
@@ -66,6 +67,7 @@ stages:
       displayName: 'Publish FakeRestAPI'
       artifact: publ_fakerestapi
 
+# Creating Selenium-Artifact 
   - job: selenium_artifact
     displayName: 'Build Selenium Artifact'
     pool: 
@@ -83,6 +85,7 @@ stages:
       displayName: 'Publish Selenium'
       artifact: selenium
 
+# Deploying fakerestapi 
 - stage: Deploy
   jobs: 
   - job: deploy_fakerestapi
@@ -105,8 +108,10 @@ stages:
         DeploymentType: 'zipDeploy'
         TakeAppOfflineFlag: false
 
+# Test-Stage
 - stage: Test
   jobs: 
+    # Starting with JMeter Test
   - job: JMeter_test
     displayName: 'JMeter Tests'
     steps:
@@ -132,12 +137,13 @@ stages:
         script: |
           mkdir -p stress_test
           jmeter -n -t stress_plan.jmx -l stress_results.csv -f -e -o stress_test
-          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/stress_test'
         ArtifactName: 'stress-results'
 
+  # Selenium UI -Test
   - deployment: SeleniumTest_VM
     displayName: 'Testing UI' 
     environment:
@@ -172,7 +178,7 @@ stages:
                   cd $(Pipeline.Workspace)/selenium
                   echo >> /logs/selenium_logfile.log
                   python3 login.py 2>&1 | sudo tee -a /logs/selenium_logfile.log
-  
+  # Postman Tests 
   - job: Postman_api
     displayName: 'Postman Integration'
     steps: 
