@@ -107,18 +107,26 @@ stages:
 
 - stage: Test
   jobs: 
-  - job: Load_Test
+  - job: JMeter_Test
     displayName: 'JMeter Load-Test'
     steps:
     - task: JMeterInstaller@0
       inputs:
         jmeterVersion: '5.2.1'
-    - task: Bash@3
+    - task: CmdLine@2
       displayName: 'Run Jmeter test'
       inputs:
         targetType: 'inline'
         script: |
-          jmeter -n -t automatedtesting/jmeter/Starter.jmx -l tests_results.csv -f -e -o test-report
+          mkdir -p endurance_test
+          jmeter -n -t automatedtesting/jmeter/Starter.jmx -l endurance_results.csv -f -e -o endurance_results
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance-results'
+        ArtifactName: 'endurance-results'
+
+
 
   - deployment: SeleniumTest_VM
     displayName: 'Testing UI' 
@@ -184,72 +192,4 @@ stages:
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: $(Build.SourcesDirectory)/automatedtesting/postman/test_report.xml
-
-
-
-
-
-#- stage: Build
-#  jobs:
-#  - job: Build
- #   pool:
-  #    name: Hosted Ubuntu 1604
-   # steps:
-    # Needed for Terraform VM deployment
-    # - task: InstallSSHKey@0
-    #   inputs:
-    #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
-    #     sshPublicKey: 'PUBLIC_KEY'
-    #     sshKeySecureFile: 'id_rsa'
-
-    #- task: ArchiveFiles@2
-    #  displayName: 'Archive FakeRestAPI'
-    #  inputs:
-    #    rootFolderOrFile: 'path/to/fakerestapi'
-    #    includeRootFolder: false
-    #    archiveType: 'zip'
-    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-    #  displayName: 'Upload Package'
-    #  artifact: drop-fakerestapi
-#- stage:
-#  jobs:
- # - deployment: FakeRestAPI
- #   pool:
- #     vmImage: 'Ubuntu-16.04'
-  #  environment: 'TEST'
-  #  strategy:
-   #   runOnce:
-   #     deploy:
-    #      steps:
-     #     - task: AzureWebApp@1
-      #      displayName: 'Deploy Azure Web App'
-       #     inputs:
-        #      azureSubscription: ''
-         #     appName: ''
-          #    appType: webApp
-           #   package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  # - deployment: VMDeploy
-  #   displayName: NAME
-  #   environment:
-  #     name:  ENVIRONMENT NAME
-  #     resourceType: VirtualMachine
-  #     tags: TAG NAME
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - task: Bash@3
-  #           inputs:
-  #             targetType: 'inline'
-  #             script: |
-  #               #! /bin/bash
-                
-  #               sudo apt-get upgrade -y
-  #               sudo apt-get install python3-pip -y
-  #               sudo apt-get install unzip -y
-  #               sudo apt-get install -y chromium-browser
-  #               pip3 install selenium
-  #               export PATH=$PATH:some/path
-
 
