@@ -143,7 +143,7 @@ stages:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/stress_test'
         ArtifactName: 'stress-results'
 
-  # Selenium UI -Test
+  # Selenium Interface -Test
   - deployment: SeleniumTest_VM
     displayName: 'Testing UI' 
     environment:
