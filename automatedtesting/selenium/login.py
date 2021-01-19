@@ -7,8 +7,8 @@ import logging, sys
 def login (user, password):
     print ('Starting the browser...')
     # --uncomment when running in Azure DevOps.
-    options = ChromeOptions()
-    options.add_argument("--headless") 
+    #options = ChromeOptions()
+    #options.add_argument("--headless") 
     driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome('D:\Chromedriver\chromedriver.exe')
     logging.basicConfig(level=logging.INFO, stream=sys.stdout, datefmt='%Y-%m-%d %H:%M:%S')

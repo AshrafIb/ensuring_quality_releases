@@ -155,7 +155,7 @@ stages:
           steps:
             - download: current
               artifact: selenium 
-            - task: CmdLine@2
+            - task: Bash@3
               displayName: 'Installing Selenium'
               inputs: 
                 script: |
@@ -169,7 +169,7 @@ stages:
                   export PATH=$PATH:/usr/lib/chromium-browser/
                   cd $(Pipeline.Workspace)/selenium
                   unzip -o $(Pipeline.Workspace)/selenium/selenium-$(Build.BuildId) -d .
-            - task: CmdLine@2
+            - task: Bash@3
               displayName: 'Running Selenium Test'
               inputs:
                 script: |
