@@ -155,9 +155,10 @@ stages:
           steps:
             - download: current
               artifact: selenium 
-            - task: CmdLine@2
+            - task: Bash@3
               displayName: 'Installing Selenium'
               inputs: 
+                targetType: 'inline'
                 script: |
                   #! /bin/bash
                   sudo apt-get update -y
@@ -169,9 +170,10 @@ stages:
                   export PATH=$PATH:/usr/lib/chromium-browser/
                   cd $(Pipeline.Workspace)/selenium
                   unzip -o $(Pipeline.Workspace)/selenium/selenium-$(Build.BuildId) -d .
-            - task: CmdLine@2
+            - task: Bash@3
               displayName: 'Running Selenium Test'
               inputs:
+                targetType: 'inline'
                 script: |
                   sudo mkdir -p /var/logs
                   sudo chmod 777 /var/logs
