@@ -178,6 +178,7 @@ stages:
                   cd $(Pipeline.Workspace)/selenium
                   echo >> /logs/selenium_logfile.log
                   python3 login.py 2>&1 | sudo tee -a /logs/selenium_logfile.log
+                  
   # Postman Tests 
   - job: Postman_api
     displayName: 'Postman Integration'
