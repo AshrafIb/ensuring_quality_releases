@@ -1,0 +1,25 @@
+INFO:root:Logging in to Website
+INFO:root:Searching for Products
+INFO:root:User standard_user logged in successfully
+INFO:root:Finding Products
+INFO:root:Sauce Labs Backpack Porduct found on Website
+INFO:root:Product Sauce Labs Backpack added to cart
+INFO:root:Sauce Labs Bike Light Porduct found on Website
+INFO:root:Product Sauce Labs Bike Light added to cart
+INFO:root:Sauce Labs Bolt T-Shirt Porduct found on Website
+INFO:root:Product Sauce Labs Bolt T-Shirt added to cart
+INFO:root:Sauce Labs Fleece Jacket Porduct found on Website
+INFO:root:Product Sauce Labs Fleece Jacket added to cart
+INFO:root:Sauce Labs Onesie Porduct found on Website
+INFO:root:Product Sauce Labs Onesie added to cart
+INFO:root:Test.allTheThings() T-Shirt (Red) Porduct found on Website
+INFO:root:Product Test.allTheThings() T-Shirt (Red) added to cart
+INFO:root:All Elements have been added to cart
+INFO:root:Product Sauce Labs Backpack removed from cart
+INFO:root:Product Sauce Labs Bike Light removed from cart
+INFO:root:Product Sauce Labs Bolt T-Shirt removed from cart
+INFO:root:Product Sauce Labs Fleece Jacket removed from cart
+INFO:root:Product Sauce Labs Onesie removed from cart
+INFO:root:Product Test.allTheThings() T-Shirt (Red) removed from cart
+INFO:root:Cart is empty again
+INFO:root:Test was successfull

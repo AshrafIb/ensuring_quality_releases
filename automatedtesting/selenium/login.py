@@ -1,7 +1,7 @@
 # #!/usr/bin/env python
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-import logging
+import logging, sys
 
 # Start the browser and login with standard_user
 def login (user, password):
@@ -11,6 +11,7 @@ def login (user, password):
     options.add_argument("--headless") 
     driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome('D:\Chromedriver\chromedriver.exe')
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
 
