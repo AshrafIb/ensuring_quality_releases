@@ -173,12 +173,12 @@ stages:
               displayName: 'Running Selenium Test'
               inputs:
                 script: |
-                  sudo mkdir -p /logs
-                  sudo chmod 777 /logs
+                  sudo mkdir -p /var/logs
+                  sudo chmod 777 /var/logs
                   cd $(Pipeline.Workspace)/selenium
-                  echo >> /logs/selenium_logfile.log
-                  python3 login.py 2>&1 | sudo tee -a /logs/selenium_logfile.log
-                  
+                  python3 login.py 2>&1 | sudo tee -a /var/logs/selenium_logfile.log
+                  cat /var/logs/selenium_logfile.log
+
   # Postman Tests 
   - job: Postman_api
     displayName: 'Postman Integration'

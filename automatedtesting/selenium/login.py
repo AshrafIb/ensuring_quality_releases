@@ -11,7 +11,7 @@ def login (user, password):
     options.add_argument("--headless") 
     driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome('D:\Chromedriver\chromedriver.exe')
-    logging.basicConfig(level=logging.INFO, filename='seleniumlog.log', datefmt='%Y-%m-%d %H:%M:%S')
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout, datefmt='%Y-%m-%d %H:%M:%S')
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
 
