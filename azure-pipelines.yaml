@@ -160,12 +160,15 @@ stages:
               inputs: 
                 script: |
                   #! /bin/bash
+                  echo Test
                   sudo apt-get update -y
                   sudo apt-get install python3-pip -y
                   sudo apt-get install unzip -y
                   sudo apt-get install -y chromium-browser
                   sudo apt-get install -y chromium-chromedriver
+                  echo test2 
                   pip3 install selenium
+                  echo test3 
                   export PATH=$PATH:/usr/lib/chromium-browser/
                   cd $(Pipeline.Workspace)/selenium
                   unzip -o $(Pipeline.Workspace)/selenium/selenium-$(Build.BuildId) -d .
