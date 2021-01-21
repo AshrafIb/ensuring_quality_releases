@@ -11,7 +11,7 @@ terraform {
     storage_account_name = "quality"
     container_name       = "qualitycontainer"
     key                  =  "terraform.tfstate"
-    access_key           = "QBvo+oVykRtxgh3PX9yEzS0WCMi1B3Sy3NGxzr0e7+19a/5tUPAMAolAWxAkFZcmjPLQ8W0ldY7CKrIQ5nGz0w=="
+    access_key           = "ACCESS_KEY"
   }
 }
 module "resource_group" {
